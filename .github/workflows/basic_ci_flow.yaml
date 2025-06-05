@@ -1,4 +1,4 @@
-name: CI - WebApp
+name: CI - Playground API
 
 on:
   push:
