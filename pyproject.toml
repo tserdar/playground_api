@@ -1,5 +1,5 @@
 [project]
-name = "web_demo"
+name = "playground_api"
 version = "0.0.0"
 description = "This is a very simple project to demonstrate what I can do in a nutshell."
 authors = [
