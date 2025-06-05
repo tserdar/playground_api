@@ -33,7 +33,12 @@ def test_ocr_infer(mock_infer: MagicMock, dummy_image: bytes) -> None:
 
 
 @patch("cv2.imencode", return_value=(True, MagicMock(tobytes=lambda: b"img")))
-def test_ocr_visualize(dummy_image: bytes) -> None:
+@patch("api.routes.ocr.EasyOCRWrapper.visualize")
+def test_ocr_visualize(
+    mock_visualize: MagicMock,  # noqa: ARG001
+    mock_imencode: MagicMock,  # noqa: ARG001
+    dummy_image: bytes,
+) -> None:
     """Test that /ocr?visualize=true returns a JPEG response."""
     files = {"file": ("test.jpg", dummy_image, "image/jpeg")}
     response = client.post("/ocr?visualize=true", files=files)

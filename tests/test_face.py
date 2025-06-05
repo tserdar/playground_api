@@ -24,22 +24,21 @@ def test_face_infer(mock_infer: MagicMock, dummy_image: bytes) -> None:
     files = {"file": ("face.jpg", dummy_image, "image/jpeg")}
     response = client.post("/face?visualize=false", files=files)
 
-    if response.status_code != HTTP_OK:
-        pytest.fail(f"Expected 200 OK, got {response.status_code}")
-    if response.json() != {"results": ["face-data"]}:
-        pytest.fail(f"Unexpected response body: {response.json()}")
-
+    assert response.status_code == HTTP_OK  # noqa: S101
+    assert response.json() == {"results": ["face-data"]}  # noqa: S101
     mock_infer.assert_called_once()
 
 
 @patch("cv2.imencode", return_value=(True, MagicMock(tobytes=lambda: b"img")))
-def test_face_visualize(dummy_image: bytes) -> None:
+@patch("api.routes.face.RetinaNetWrapper.visualize")
+def test_face_visualize(
+    mock_visualize: MagicMock,  # noqa: ARG001
+    mock_imencode: MagicMock,  # noqa: ARG001
+    dummy_image: bytes,
+) -> None:
     """Test that /face?visualize=true returns a JPEG image."""
     files = {"file": ("face.jpg", dummy_image, "image/jpeg")}
     response = client.post("/face?visualize=true", files=files)
 
-    if response.status_code != HTTP_OK:
-        pytest.fail(f"Expected 200 OK, got {response.status_code}")
-    content_type = response.headers.get("content-type")
-    if content_type != "image/jpeg":
-        pytest.fail(f"Expected image/jpeg, got {content_type}")
+    assert response.status_code == HTTP_OK  # noqa: S101
+    assert response.headers.get("content-type") == "image/jpeg"  # noqa: S101
