@@ -78,8 +78,12 @@ jobs:
           uv venv
           uv sync
       
-      - name: Run unit tests
-        run: uv run pytest tests/routes.py -v
+      - name: Run run.py test
+        run: uv run pytest tests/test_run.py -v
+      - name: Run face test
+        run: uv run pytest tests/test_face.py -v
+      - name: Run ocr test
+        run: uv run pytest tests/test_ocr.py -v
       
       - name: Clean up
         if: always()
