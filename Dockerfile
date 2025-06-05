@@ -9,10 +9,12 @@ WORKDIR /app
 
 # Start this layer separately here to optimize building speed.
 COPY pyproject.toml /app
+COPY install_deps.py /app
+RUN uv venv && uv run -m install_deps
+
 COPY . /app  
 
-RUN uv venv && uv run -m install_deps
 
 EXPOSE 8000
 
-CMD ["uv", "run", "gunicorn", "-k", "uvicorn.workers.UvicornWorker", "run:app", "--bind", "0.0.0.0:8000", "--workers", "4", "--preload"]
+CMD ["uv", "run", "uvicorn", "run:app", "--host", "0.0.0.0", "--port", "8000"]
