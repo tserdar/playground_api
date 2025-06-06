@@ -1,7 +1,11 @@
-name: Test SSH to GCP VM
+name: CD - Playground API
 
 on:
-  workflow_dispatch:  # lets you trigger manually from GitHub UI
+  push:
+    tags:
+      - '*'
+    branches:
+      - main
 
 jobs:
   ssh-test:
@@ -15,7 +19,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.GCP_VM_IP }} >> ~/.ssh/known_hosts
 
-      - name: Connect and run test command
+      - name: Connect and Deploy
         run: |
           ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_IP }} << 'EOF'
           set -e
@@ -23,6 +27,5 @@ jobs:
           cd playground_api
           git pull origin main
           chmod +x deploy.sh
-          cd ..
           ./deploy.sh
           EOF
