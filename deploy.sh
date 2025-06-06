@@ -2,7 +2,7 @@
 set -e
 
 echo "Building Docker image..."
-docker build . -t playground_app
+docker build . -t playground_api
 cd ..
 cd traefik
 
