@@ -4,13 +4,12 @@ on:
   push:
     tags:
       - '*'
-    branches:
-      - main
+      
+  workflow_dispatch:
 
 jobs:
-  ssh-test:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Setup SSH
         run: |
