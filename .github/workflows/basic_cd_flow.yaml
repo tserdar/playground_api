@@ -1,0 +1,30 @@
+name: CD - Playground API
+
+on:
+  push:
+    tags:
+      - '*'
+      
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GCP_VM_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.GCP_VM_IP }} >> ~/.ssh/known_hosts
+
+      - name: Connect and Deploy
+        run: |
+          ssh ${{ secrets.GCP_VM_USER }}@${{ secrets.GCP_VM_IP }} << 'EOF'
+          set -e
+          echo "Pulling latest code..."
+          cd playground_api
+          git pull origin main
+          chmod +x deploy.sh
+          ./deploy.sh
+          EOF
