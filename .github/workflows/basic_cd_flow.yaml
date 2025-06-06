@@ -24,7 +24,10 @@ jobs:
           set -e
           echo "Pulling latest code..."
           cd playground_api
-          git pull origin main
+          git fetch origin main
+          git checkout -f main
+          git reset --hard origin/main
+          git clean -fd
           chmod +x deploy.sh
           ./deploy.sh
           EOF
