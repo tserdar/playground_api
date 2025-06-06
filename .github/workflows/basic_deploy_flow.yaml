@@ -24,5 +24,5 @@ jobs:
           git pull origin main
           chmod +x deploy.sh
           cd ..
-          ./deploy.sh
+          playground_api/deploy.sh
           EOF
