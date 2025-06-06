@@ -5,7 +5,8 @@ on:
     paths-ignore:
       - 'README.md'
       - 'docs/**'
-    branches: [ main ]
+    tags:
+      - '*'
   pull_request:
     paths-ignore:
       - 'README.md'
@@ -23,13 +24,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11.x'
           cache: 'pip'
       
       - name: Install Ruff
         run: |
           python -m pip install --upgrade pip
-          pip install ruff
+          pip install ruff==0.11.13
       
       - name: Run Ruff linter
         run: ruff check .
@@ -37,6 +38,7 @@ jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
+    continue-on-error: false
     steps:
       - name: Free Disk Space
         run: |
@@ -72,12 +74,10 @@ jobs:
           key: uv-${{ runner.os }}-${{ hashFiles('**/uv.lock', '**/pyproject.toml') }}
           restore-keys: |
             uv-${{ runner.os }}-
-      
+
       - name: Create virtual environment and install dependencies
-        run: |
-          uv venv
-          uv sync
-      
+        run: uv venv && uv pip install pytest==8.3.5
+
       - name: Run run.py test
         run: uv run pytest tests/test_run.py -v
       - name: Run face test
