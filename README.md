@@ -10,7 +10,7 @@
 ## 💸 Cost & Infrastructure
 
 __🟢 This project is intentionally built to cost virtually 0$ and run on FREE tiers only.__  
-__It is designed for zero-cost operation using:__
+__The focus: Live demo with zero-cost operation:__
 
 - 🐳 **Docker** (local or VM)
 - 🆓 **GitHub Actions** (CI/CD on free tier)
