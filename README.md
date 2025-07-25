@@ -1,89 +1,89 @@
 # 🧠 Playground API
 
-> A production-grade FastAPI project that demonstrates AI inference through OCR, face detection, and chatbot capabilities — fully containerized and CI/CD-ready.
+> A containerized AI-powered FastAPI backend with real-time chat, face detection, and OCR — built using PyTorch, Hugging Face Transformers, and OpenCV. Deployed via CI/CD on a zero-cost cloud setup.
 
 ![CI Checks](https://github.com/tserdar/playground_api/actions/workflows/basic_ci_flow.yaml/badge.svg)
 ![CD Checks](https://github.com/tserdar/playground_api/actions/workflows/basic_cd_flow.yaml/badge.svg)
 
 ---
 
-## 💸 Cost & Infrastructure
+## 📌 Highlights
 
-__🟢 This project is intentionally built to cost virtually 0$ and run on FREE tiers only.__  
-__The focus: Live demo with zero-cost operation:__
+- ✅ FastAPI + WebSocket + REST — real-time API stack
+- ✅ Deep Learning: **PyTorch**, **Transformers**
+- ✅ Docker-first architecture with optimized layers
+- ✅ Deployed on **free-tier cloud** with secure GitHub-based CD
+- ✅ Uses **only open-source models** — no paid SaaS or API gateways
+- ✅ Built with **cost-awareness** in mind: __zero dollar infra__
 
-- 🐳 **Docker** (local or VM)
-- 🆓 **GitHub Actions** (CI/CD on free tier)
-- ☁️ **GCP VM (e2-micro)** — free-tier eligible
-- 💡 **Open-source models** (Qwen2, EasyOCR, RetinaFace)
-- 🔑 **No paid APIs or services required**
+---
 
-The only cost for the whole project is the domain name.
+## 💸 Zero-Cost Architecture
+
+__🟢 This project is designed to be FREE to run.__  
+All components run on free-tier infrastructure with open-source tooling:
+
+- 🐳 Dockerized deployment
+- ☁️ GCP e2-micro VM (always-free tier)
+- 🧪 GitHub Actions for CI/CD (free-tier)
+- 🧠 Inference using local models — no paid APIs or usage limits
+- 🔐 Deployment via secure SSH (no orchestration overhead)
+
 ---
 
 ## 🧱 Tech Stack
 
-### ⚙️ Backend
-- **Python 3.12.9**
-- **FastAPI** for async REST APIs
-- **uvicorn** & **gunicorn** for ASGI serving
-- **WebSockets** for live chat
-- **uv** for fast dependency & virtualenv management
+### 🔙 Backend
+- **Python 3.12**
+- **FastAPI** (high-performance async API)
+- **Uvicorn** + **Gunicorn** for ASGI serving
+- **WebSockets** (for real-time chat)
+- **uv** (lightweight virtualenv + dependency manager)
 
-### 🤖 AI & Deep Learning
-- `easyocr` for OCR
-- `retina-face` for face detection
-- `transformers`, `torch`, `accelerate` for chatbot (Qwen2)
-- OpenCV for visualization
-
-### 🐋 DevOps & Runtime
-- **Dockerized** with `uv`-based build layers
-- CI with **Ruff** linter & `pytest`
-- CD via **SSH deploy to GCP VM**
+### 🤖 Machine Learning & Inference
+- **PyTorch** — core runtime for all deep learning models
+- **Hugging Face Transformers** — `Qwen2-0.5B-Instruct` for chat
+- **EasyOCR** — OCR from images (Torch-based)
+- **RetinaFace** — Face detection with facial landmarks
+- **OpenCV** — Image manipulation & annotation
+- **Accelerate** — Lightweight GPU utilization
 
 ---
 
-## 🚀 Features
+## 📦 Features
 
-| Feature        | Description                              |
-|----------------|------------------------------------------|
-| `/ocr`         | Extracts text from images (EasyOCR)      |
-| `/face`        | Detects faces & landmarks (RetinaFace)   |
-| `/chat` (WS)   | Real-time chatbot via WebSocket (Qwen2)  |
-| `/`            | Healthcheck endpoint                     |
-| **Visualize**  | Optional annotated image responses       |
+| Feature        | Description                                            |
+|----------------|--------------------------------------------------------|
+| `/ocr`         | OCR on images via EasyOCR                              |
+| `/face`        | Face detection & landmark visualization via RetinaFace |
+| `/chat` (WS)   | Real-time AI chatbot (Qwen2) over WebSocket            |
+| `/`            | Root health endpoint                                   |
+| `visualize`    | Returns annotated images on demand (bounding boxes, etc.) |
 
 ---
 
-## 🔁 CI/CD
+## 🔁 CI/CD Pipeline
 
-- **CI**: Linting (Ruff) + Unit Tests (Pytest)
-- **CD**: Tag-based SSH deployment to GCP VM
-- Configured via `.github/workflows/*.yaml`
-- Secrets:
+- **CI**: Linting (Ruff) + Tests (Pytest)
+- **CD**: Auto-deploy on Git tag push to GCP VM
+- Managed via GitHub Actions:
+  - `.github/workflows/basic_ci_flow.yaml`
+  - `.github/workflows/basic_cd_flow.yaml`
+- **Secrets Managed**:
   - `GCP_VM_SSH_KEY`
-  - `GCP_VM_IP`
   - `GCP_VM_USER`
+  - `GCP_VM_IP`
 
 ---
 
 ## ✅ Testing
 
-- FastAPI `TestClient` used for route validation
-- Mocked model inference for OCR & face detection
-- Tested:
+- `pytest` + FastAPI’s `TestClient`
+- Mocked inference for OCR/Face detection
+- Coverage:
   - `GET /`
   - `POST /ocr`
   - `POST /face`
+  - Optional `visualize=true` rendering
 
 ---
-
-## 📌 Summary
-
-This repo demonstrates:
-- ✅ Modular AI inference API
-- ✅ Docker-first development
-- ✅ Fast and type-safe backend with FastAPI
-- ✅ Reproducible builds using `uv`
-- ✅ Fully automated CI/CD pipeline
-- ✅ __Virtually $0 to run — every component can be hosted for FREE__
